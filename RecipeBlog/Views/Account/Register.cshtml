@@ -1,0 +1,85 @@
+﻿@using RecipeBlog.ViewModels
+@model RegisterViewModel
+@{
+    ViewBag.Title = "Регистрация";
+}
+
+<div style="margin-left:15px">
+    <h3>Добро пожаловать на страницу регистрации</h3>
+    <p class="main-font">
+        Регистрация позволяет публиковать собственные рецепты, а также комментировать рецепты других пользователей<br />
+        <span style="color:red">После регистрации перейдите в почтовой ящик для подтверждения учетной записи</span>
+    </p>
+</div>
+<hr />
+<div style="margin:15px">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <div class="row">
+            <div class="col-sm-2 col-md-1">
+                <img class="user-recipe-img" src="~/Content/Images/user.png" />
+            </div>
+            <div class="col-sm-10 col-md-11">
+                @Html.LabelFor(m => m.Email, new { @class = "col-sm-4 col-md-3 col-lg-2 control-label" })
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    <p class="text-muted">
+                        Введите адрес используемой почты. Email будет использоваться в качестве логина для входа в учетную запись
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-10 col-md-11" style="margin-top:20px">
+                @Html.LabelFor(m => m.NickName, new { @class = "col-sm-4 col-md-3 col-lg-2 control-label" })
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    @Html.TextBoxFor(m => m.NickName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.NickName, "", new { @class = "text-danger" })
+                    <p class="text-muted">
+                        Введите Ваше имя или псевдоним для того, чтобы другие пользователи смогли идентифицировать Вас
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div style="margin-left:15px; margin-top:40px">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "col-sm-2 col-md-1 col-lg-1 control-label" })
+                <div class="col-sm-6">
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                    <p class="text-muted">
+                        Введите любую информацию о себе, которя будет доступна для других пользователей: Ваш опыт в кулинарии,
+                        любимые блюда, кухня и т.д
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-sm-2 col-md-1 col-lg-1 control-label" })
+                <div class="col-sm-6">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    <p class="text-muted">
+                        Введите пароль, который будет использоваться для входа. Пароль состоит не менее из 6 символов
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-2 col-md-1 col-lg-1 control-label" })
+                <div class="col-sm-6">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-12">
+                    <input type="reset" class="btn btn-default" value="Очистить поля" />
+                    <input type="submit" class="btn btn-danger" value="Регистрация" style="margin-left:30px" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

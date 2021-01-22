@@ -1,0 +1,52 @@
+﻿@using RecipeBlog.ViewModels
+@model CommentViewModel
+
+
+<article class="col-lg-10" style="margin-top:4px; margin-bottom:4px">
+    @{
+        if (!String.IsNullOrEmpty(Model.AnswerName))
+        {
+            <div style="background-color:#FFC9BE; border:solid 1px red; margin-right:20px; margin-left:20px; padding:7px">
+                <p>
+                    <span>
+                        @Html.ActionLink(Model.AnswerName, "User", "User", new { id = Model.AnswerAuthorId }, new { @style = "font-size:16px" }) @Model.DateTimeAnswer
+                    </span>
+                </p>
+                <p>
+                    <span style="font-size:16px">@Model.AnswerComment</span><br />
+                </p>
+            </div>
+        }
+    }
+    <div style="margin-top:20px">
+        <div style="float:left; padding-right:20px; padding-bottom:20px">
+            <img class="user-recipe-img" src="~/Content/Images/user.png" />
+        </div>
+        <div>
+            <div class="text-right">
+                @{
+                    if (Model.IsDeleted)
+                    {
+                        @Html.ActionLink("Удалить", "Delete", "Comment", new { commentId = Model.Id, recipeId = Model.RecipeId }, null) ;
+                    }
+                    if (HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        @Ajax.ActionLink("Ответить", "Answer", "Comment", new { recipeId = Model.RecipeId, commentId = Model.Id }, new AjaxOptions { UpdateTargetId = Model.Id.ToString() });
+                    }
+                }
+            </div>
+            <p>
+                @Html.ActionLink(Model.AuthorName, "User", "User", new { id = Model.AuthorId }), @Model.CreationTime
+            </p>
+            <p style="padding-bottom:20px">
+                <span style="font-size:16px">@Model.CommentBody</span><br />
+            </p>
+        </div>
+        <div id=@Model.Id.ToString() style="clear:left"></div>
+    </div>
+</article>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+}

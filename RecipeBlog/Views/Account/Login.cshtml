@@ -1,0 +1,70 @@
+﻿@using RecipeBlog.ViewModels
+@model LoginViewModel
+@{
+    ViewBag.Title = "Выполнить вход";
+}
+<div>
+    <h3 style="margin-left:15px">Выполнить вход</h3>
+    <hr />
+    <div class="row" style="margin-left:15px; margin-right:15px">
+        <section class="col-md-6">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary()
+                <h4>Для входа используется локальная учетная запись</h4>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label label-form" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label label-form" })
+                    <div class="col-md-9">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RememberMe, new { @class = "col-md-3 control-label label-form" })
+                    @Html.CheckBoxFor(m => m.RememberMe, new { @style = "margin-left:15px" })
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9">
+                        <input type="submit" value="Выполнить вход" class="btn btn-danger" />
+                    </div>
+                </div>
+            }
+        </section>
+        <section class="col-md-6">
+            <div class="row">
+                <h4 class="col-sm-6" style="display:inline">Для регистрации пройдите по ссылке</h4>
+                <div class="col-sm-6">
+                    @Html.ActionLink("Регистрация нового пользователя", "Register")
+                </div>
+            </div>
+            <div class="row" style="margin-top:35px">
+                <h4 class="col-sm-6" style="display:inline">Пройдите по ссылке для восстановеления пароля</h4>
+                <div class="col-sm-6">
+                    @Ajax.ActionLink("Забыли пароль?", "ForgotPassword", new AjaxOptions { UpdateTargetId = "forgot-password" })
+                </div>
+            </div>
+            <div id="forgot-password" style="margin-top:40px"></div>
+            @{
+                if (!String.IsNullOrEmpty(ViewBag.ConfirmForgot))
+                {
+                    <p class="main-font">@ViewBag.ConfirmForgot</p>
+                }
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+}

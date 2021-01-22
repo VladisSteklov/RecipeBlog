@@ -1,0 +1,45 @@
+﻿@using RecipeBlog.ViewModels
+@using RecipeBlog.Infostructure.Services
+@using PagedList.Mvc
+@using PagedList
+
+@{
+    var userInfo = ViewBag.UserInfo as UserInfoViewModel;
+    var recipes = ViewBag.RecipePage as PagedList<RecipeViewModel>;
+}
+
+
+<div style="margin:15px">
+    <section class="row">
+        @{Html.RenderPartial("Partial/UserInfoPartial", userInfo);}
+    </section>
+    <section class="row" style="margin-left:15px">
+        @{
+            if (userInfo.CanCreateRecipe)
+            {
+                @Ajax.ActionLink("Создать новый рецепт", "Create", "Recipe", new AjaxOptions { UpdateTargetId = "write-recipe" })
+                <div id="write-recipe" style="margin-top:15px"></div>
+            }
+        }
+    </section>
+    <hr />
+    <section>
+        <span class="main-font" style="font-size:25px">Рецепты автора</span>
+        <div class="row" style="margin-top:15px">
+            @{
+                foreach(var recipe in recipes)
+                {
+                    Html.RenderPartial("../Recipe/Partial/RecipePartial", recipe);
+                }
+            }
+        </div>
+        <section class="pager">
+            @Html.PagedListPager(recipes, page => Url.Action("User", new { page, ViewBag.UserId }))
+        </section>
+    </section>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+}

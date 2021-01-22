@@ -1,0 +1,91 @@
+﻿@using RecipeBlog.ViewModels
+@using RecipeBlog.Infostructure.Services
+@using PagedList.Mvc
+@using PagedList
+
+@{
+    var recipes = ViewBag.RecipePage as PagedList<RecipeIndexViewModel>;
+}
+
+<div>
+    <nav class="row text-center">
+        <div class="col-md-6 col-md-offset-3">
+            @Html.ActionLink("Самые популярные", "Popular", new { page = 1 }, new { @class = "nav-link" })
+            @Html.ActionLink("Новые", "New", new { page = 1 }, new { @class = "nav-link" })
+            @Html.ActionLink("Мой профиль", "Profile", "Home", null, new { @class = "nav-link" })
+        </div>
+    </nav>
+    <hr>
+    <div class="row" style="margin-top:15px; margin-left:7px; margin-right:7px">
+        <section class="col-md-2">
+            @{Html.RenderPartial("../Recipe/Partial/FilterRecipePartial");}
+        </section>
+        <section class="col-md-10">
+            <div class="row" style="margin-left:15px">
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    @{
+                        if (0 < recipes.Count)
+                        {
+                            Html.RenderPartial("../Recipe/Partial/RecipeIndexPartial", recipes[0]);
+                        }
+                        if (3 < recipes.Count)
+                        {
+                            Html.RenderPartial("../Recipe/Partial/RecipeIndexPartial", recipes[3]);
+                        }
+                    }
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    @{
+                        if (1 < recipes.Count)
+                        {
+                            Html.RenderPartial("../Recipe/Partial/RecipeIndexPartial", recipes[1]);
+                        }
+                        if (4 < recipes.Count)
+                        {
+                            Html.RenderPartial("../Recipe/Partial/RecipeIndexPartial", recipes[4]);
+                        }
+                    }
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    @{
+                        if (2 < recipes.Count)
+                        {
+                            Html.RenderPartial("../Recipe/Partial/RecipeIndexPartial", recipes[2]);
+                        }
+                        if (5 < recipes.Count)
+                        {
+                            Html.RenderPartial("../Recipe/Partial/RecipeIndexPartial", recipes[5]);
+                        }
+                    }
+                </div>
+            </div>
+        </section>
+        <section class="pager">
+            @{
+                string actionName = null;
+                if(HttpContext.Current.Response.Cookies["filter"].Value ==
+                    FilterRecipeTypes.filterTypeDict[FilterRecipeTypes.FILTER_TYPE.Filters])
+                {
+                    actionName = "Filter";
+                }
+                else if(HttpContext.Current.Response.Cookies["filter"].Value ==
+                    FilterRecipeTypes.filterTypeDict[FilterRecipeTypes.FILTER_TYPE.Populars])
+                {
+                    actionName = "Popular";
+                }
+                else if (HttpContext.Current.Response.Cookies["filter"].Value ==
+                    FilterRecipeTypes.filterTypeDict[FilterRecipeTypes.FILTER_TYPE.News])
+                {
+                    actionName = "New";
+                }
+                else
+                {
+                    // По умолчанию
+                    actionName = "Index";
+                }
+            }
+            @Html.PagedListPager(recipes, page => Url.Action(actionName, new { page }))
+        </section>
+    </div>
+</div>
+

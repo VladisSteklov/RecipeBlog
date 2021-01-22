@@ -1,0 +1,46 @@
+﻿<style>
+    article {
+        border: solid 3px pink;
+        border-radius: 5px;
+        padding: 10px;
+        padding-bottom: 3px
+    }
+</style>
+@using RecipeBlog.ViewModels
+
+<div style="margin:40px">
+    <section class="row">
+        @{Html.RenderPartial("Partial/RecipePartial", ViewBag.Recipe as RecipeViewModel);}
+    </section>
+    <section class="row" style="margin-top:20px">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <a href="#end">Перейти к последнему комментарию</a>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            @{
+                if (HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+
+                    @Ajax.ActionLink("Написать комментарий к рецепту", "Comment", "Comment", new { recipeId = (ViewBag.Recipe as RecipeViewModel).Id }, new AjaxOptions { UpdateTargetId = "write-comment" });
+                }
+            }
+        </div>
+    </section>
+    <div class="row" id="write-comment" style="margin-top:15px"></div>
+    <hr/>
+    <section class="row" style="margin-top:30px">
+        @{
+            var comments = ViewBag.Comments as List<CommentViewModel>;
+            foreach(var comment in comments)
+            {
+                Html.RenderPartial("../Comment/Partial/CommentPartial", comment);
+            }
+         }
+        <div id="end"></div>
+    </section>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+}

@@ -1,0 +1,29 @@
+﻿@using RecipeBlog.ViewModels
+@model WriteCommentViewModel
+
+<article class="col-lg-6">
+    <p class="text-muted" style="font-size:15px">Напишите свой комментарий</p>
+    @using (Html.BeginForm("Comment", "Comment", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.RecipeId)
+        <div class="row">
+            <div class="col-md-3">
+                <span class="main-font">@Model.AuthorName</span>
+            </div>
+            <div class="col-md-2">
+                <input type="submit" class="btn btn-danger" value="Отправить" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12" style="margin-top:15px">
+                @Html.TextAreaFor(m => m.CommentBody, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CommentBody, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+</article>
+
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")

@@ -1,0 +1,76 @@
+﻿@using RecipeBlog.ViewModels
+@using RecipeBlog.Infostructure.Services
+@model WriteRecipeViewModel
+@{
+    var service = new FilterRecipeTypes();
+}
+
+<article class="col-lg-10 user-info">
+    <span class="main-font" style="font-size:20px">Напишите свой рецепт</span>
+    @using (Html.BeginForm("Create", "Recipe", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Title, new { @class = "col-md-3 control-label label-form" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+                <p class="text-muted">Напишите свой рецепт</p>
+            </div>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Meal, new { @class = "col-md-3 control-label label-form" })
+            <div class="col-md-9">
+                @Html.DropDownListFor(m => m.Meal, service.Meals, new { @style = "width:220px" })
+                @Html.ValidationMessageFor(m => m.Meal, "", new { @class = "text-danger" })
+                <p class="text-muted">Тип рецепта</p>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Minutes, new { @class = "col-md-3 control-label label-form" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.Minutes, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Minutes, "", new { @class = "text-danger" })
+                <p class="text-muted">Укажите число, соответствующее минутам готовки рецепта</p>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Ingredients, new { @class = "col-md-3 control-label label-form" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(m => m.Ingredients, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Ingredients, "", new { @class = "text-danger" })
+                <p class="text-muted">Перечислите через запятую используемые игредиенты и их пропорции</p>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description, new { @class = "col-md-3 control-label label-form" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                <p class="text-muted">Подробное описание рецепта</p>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CountryKitchen, new { @class = "col-md-3 control-label label-form" })
+            <div class="col-md-9">
+                @Html.DropDownListFor(m => m.CountryKitchen, service.Kitchens, new { @style = "width:220px" })
+                @Html.ValidationMessageFor(m => m.CountryKitchen, "", new { @class = "text-danger" })
+                <p class="text-muted">Страна (регион) блюда</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label label-form">Изображение файла</label>
+            <div class="col-md-9">
+                <input type="file" accept=".png, .jpeg, .jpg, .bmp" name="inputFile" />
+                <p class="text-muted">Загрузите картинку для Вашего блюда</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Отправить рецепт" class="btn btn-danger col-md-offset-3" />
+        </div>
+    }
+</article>
+
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")

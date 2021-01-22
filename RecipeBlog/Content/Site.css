@@ -1,0 +1,73 @@
+﻿body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.header-content {
+    background-color: #A52A2A;
+}
+
+.header-img {
+    width: 240px;
+}
+.user-recipe-img{
+    max-width:132px;
+    max-height:160px;
+}
+
+.header-l {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+main {
+    margin-top: 90px;
+}
+
+main hr {
+    height: 2px;
+    border: none;
+    background: linear-gradient(to right, transparent 50%, #fff 50%), linear-gradient(to right, blue, red);
+    background-size: 16px 2px, 100% 2px;
+}
+
+.nav-link {
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+    margin: 3%;
+}
+
+.nav-link:hover {
+    text-decoration: none;
+    color: red;
+}
+
+.filter-block{
+    margin-top:30px;
+}
+
+.main-font {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px
+}
+.recipe-article-index {
+    margin:5px; 
+    border:solid 1px pink;
+    border-radius:5px; 
+    height:350px;
+    max-height:350px;
+    width:100%;
+    display:inline-table
+}
+
+/*Стили для мобильных устройств*/
+@media (max-device-width:480px) {
+    .nav-link {
+        font-size: 14px;
+        color: black;
+        text-decoration: none;
+    }
+}
+

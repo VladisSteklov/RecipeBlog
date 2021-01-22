@@ -1,0 +1,74 @@
+﻿@using RecipeBlog.ViewModels
+@using RecipeBlog.Infostructure.Services
+@model FilterRecipeViewModel
+@{
+    var service = new FilterRecipeTypes();
+}
+<div>
+    <h3 class="text-center">Фильтрация рецептов</h3>
+    @using (Html.BeginForm("Filter", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="row filter-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(m => m.Meal, new { @class = "label-form" })
+            </div>
+            <div class="col-sm-12">
+                @Html.DropDownListFor(m => m.Meal, service.Meals, new { @style = "margin:4px; width:170px" })
+                @Html.ValidationMessageFor(m => m.Meal, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row filter-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(m => m.CountryKitchen, new { @class = "label-form" })
+            </div>
+            <div class="col-sm-12">
+                @Html.DropDownListFor(m => m.CountryKitchen, service.Kitchens, new { @style = "margin:4px;width:170px" })
+                @Html.ValidationMessageFor(m => m.CountryKitchen, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row filter-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(m => m.PhotoAvailability, new { @class = "label-form" })
+                @Html.ValidationMessageFor(m => m.PhotoAvailability, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-12">
+                <div class="col-sm-12">
+                    @Html.RadioButtonFor(m => m.PhotoAvailability, "Есть", new { @id = "filter-opt1", @class = "btn-check" })
+                    @Html.Label("Есть", new { @class = "", @for = "filter-opt1 label-form" })
+                </div>
+                <div class="col-sm-12">
+                    @Html.RadioButtonFor(m => m.PhotoAvailability, "Нет", new { @id = "filter-opt2", @class = "btn-check" })
+                    @Html.Label("Нет", new { @class = "", @for = "filter-opt2 label-form" })
+                </div>
+                <div class="col-sm-12">
+                    @Html.RadioButtonFor(m => m.PhotoAvailability, "Не важно", new { @id = "filter-opt3", @class = "btn-check", @checked = "checked" })
+                    @Html.Label("Не важно", new { @class = "", @for = "filter-opt3 label-form" })
+                </div>
+            </div>
+        </div>
+        <div class="row filter-block">
+            <div class="col-sm-12">
+                @Html.LabelFor(m => m.CommentsAvailability, new { @class = "label-form" })
+                @Html.ValidationMessageFor(m => m.CommentsAvailability, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-12">
+                <div class="col-md-12">
+                    @Html.RadioButtonFor(m => m.CommentsAvailability, "Есть", new { @id = "filter-opt4", @class = "btn-check" })
+                    @Html.Label("Есть", new { @class = "", @for = "filter-opt4 label-form" })
+                </div>
+                <div class="col-md-12">
+                    @Html.RadioButtonFor(m => m.CommentsAvailability, "Нет", new { @id = "filter-opt5", @class = "btn-check" })
+                    @Html.Label("Нет", new { @class = "", @for = "filter-opt5 label-form" })
+                </div>
+                <div class="col-md-12">
+                    @Html.RadioButtonFor(m => m.CommentsAvailability, "Не важно", new { @id = "filter-opt6", @class = "btn-check", @checked = "checked" })
+                    @Html.Label("Не важно", new { @class = "", @for = "filter-opt6 label-form" })
+                </div>
+            </div>
+        </div>
+        <div class="text-right">
+            <input class="btn btn-danger" style="height:35px; max-width:150px; margin-top:15px" type="submit" value="Фильтрация" />
+        </div>
+    }
+</div>

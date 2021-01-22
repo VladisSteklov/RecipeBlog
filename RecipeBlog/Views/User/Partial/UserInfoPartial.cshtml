@@ -1,0 +1,29 @@
+﻿<style>
+    .article-info {
+        border: solid 3px pink;
+        border-radius: 5px;
+        padding: 10px;
+        padding-bottom: 3px
+    }
+</style>
+@using RecipeBlog.ViewModels
+@model UserInfoViewModel
+
+<article class="col-lg-10 user-info">
+    <h3>Информация о пользователе @Model.NickName</h3>
+    <div style="margin-top:30px">
+        <div style="float:left; padding-right:20px; padding-bottom:20px">
+            <img class="user-recipe-img" src="~/Content/Images/user.png" />
+        </div>
+        <div>
+            <p>
+                <h4>Имя пользователя </h4>
+                <span class="main-font">@Model.NickName</span>
+            </p>
+            <p>
+                <h4>Описание пользователя </h4>
+                <span class="main-font">@Model.Description</span>
+            </p>
+        </div>
+    </div>
+</article>

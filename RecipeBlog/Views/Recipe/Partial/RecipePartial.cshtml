@@ -1,0 +1,50 @@
+﻿@using RecipeBlog.ViewModels
+@model RecipeViewModel
+@{
+    var fileName = @"../../../Content/UserImages/" + Model.ImageName;
+}
+
+<article class="col-lg-10">
+    <div style="float:left; padding-right:20px; padding-bottom:20px">
+        <img class="user-recipe-img" src="@fileName" />
+    </div>
+    <div>
+        <div>
+            <h4>@Html.ActionLink(Model.Title, "Recipe", "Recipe", new { recipeId = Model.Id }, null)</h4>
+            <p>
+                <span class="main-font">Время приготовления: </span>
+                <span>@Model.Minutes минут</span>
+            </p>
+            <p>
+                <span class="main-font">Используемые ингредиенты: </span><br />
+                <span>@Model.Ingredients</span>
+            </p>
+            <p style="clear:left">
+                <span class="main-font">Описание рецепта: </span>
+                <span>@Model.Description</span>
+            </p>
+            <p style="clear:left">
+                <span class="main-font">Автор рецепта: </span>
+                <span>@Html.ActionLink(Model.AuthorName, "User", "User", new { userId = Model.AuthorId }, null), @Model.CreationTime</span>
+            </p>
+            <p style="clear:left">
+                <span class="main-font"><b>Теги: </b></span>
+                @{
+                    if (!String.IsNullOrEmpty(Model.Tag))
+                    {
+                        <span>@Model.Tag</span>
+                    }
+                }
+            </p>
+            @{
+                if (Model.IsDeleted)
+                {
+                    <span>@Html.ActionLink("Удалить рецепт", "Delete", "Recipe", new { recipeId = Model.Id }, null)</span>
+                }
+            }
+            <p>
+
+            </p>
+        </div>
+    </div>
+</article>

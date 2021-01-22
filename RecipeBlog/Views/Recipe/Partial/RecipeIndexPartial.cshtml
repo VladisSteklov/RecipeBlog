@@ -1,0 +1,28 @@
+﻿@using RecipeBlog.ViewModels
+@model RecipeIndexViewModel
+@{
+    var fileName = @"../../../Content/UserImages/" + Model.ImageName;
+}
+
+<article class="recipe-article-index">
+    <div style="padding:7px">
+        <div style="float:left; padding-right:20px;">
+            <img class="user-recipe-img" src="@fileName" />
+        </div>
+        <div>
+            <h4 class="text-center"><a href="#"><u>@Html.ActionLink(Model.Title, "Recipe", "Recipe", new { recipeId = Model.Id }, null)</u></a></h4>
+            <p>
+                <span class="main-font">Используемые ингредиенты: </span><br />
+                <span>@Model.Ingredients</span>
+            </p>
+            <p style="clear:left">
+                <span class="main-font">Время приготовления:</span>
+                <span>@Model.Minutes минут</span>
+            </p>
+            <p style="clear:left">
+                <span class="main-font">Автор рецепта:</span>
+                <span style="font-size:16px">@Html.ActionLink(Model.AuthorName, "User", "User", new { userId = Model.AuthorId }, null) @Model.DateTime</span>
+            </p>
+        </div>
+    </div>
+</article>
